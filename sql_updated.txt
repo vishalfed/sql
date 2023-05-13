@@ -186,6 +186,57 @@ alter table emp drop column city;
 
 
 
+joins
+------
+
+Equi-join
+----------
+SELECT e.empno,e.ename,d.deptno from emp e,dept d where e.deptno=d.deptno;
+
+SELECT emp.empno,emp.ename,dept.deptno from emp,dept where emp.deptno=dept.deptno;
+
+Non Equi join
+--------------
+
+SELECT e.empno,e.ename,d.deptno from emp e,dept d where e.sal>4000;
+SELECT e.empno,e.ename,d.deptno from emp e,dept d where e.sal<4000;
+SELECT e.empno,e.ename,e.sal,d.deptno from emp e,dept d where e.sal BETWEEN 2000 AND 5000;
+
+LEFT/RIGTH OUTER JOIN
+----------------
+
+SELECT e.empno,e.ename,d.deptno,d.dname from emp e LEFT OUTER JOIN dept d ON e.deptno=d.deptno;
+
+
+SELECT e.empno,e.ename,d.deptno,d.dname from emp e RIGHT OUTER JOIN dept d ON e.deptno=d.deptno;
+
+SELECT e.empno,e.ename,d.deptno,d.dname from dept d LEFT OUTER JOIN emp e ON e.deptno=d.deptno;
+
+FULL OUTER JOIN
+----------------
+SELECT e.empno,e.ename,d.deptno,d.dname from dept d FULL OUTER JOIN emp e ON e.deptno=d.deptno;
+
+
+SELF JOIN
+---------
+
+SELECT e.ename||' works under '||''||m.ename FROM emp e,emp m where e.mgr=m.empno;
+
+
+
+
+
+
+
+
+
+
+ 
+
+
+
+
+
 
 
 
