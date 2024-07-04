@@ -1049,7 +1049,6 @@ mysql -u root -p a_ums < d:\VISHAL_SIR\ums.sql
 SQL opeartors
 -----------------------
 AND, OR,IN, LIKE, NOT LIKE
-
 UNION
 UNION ALL
 
@@ -1059,6 +1058,32 @@ UNION ALL
 
 -----------------------------------------------------------------------------------------------------------------------------------------
 
+Day10 : 4-July-2024   
+----------------------------
+SQL Window Functions
+-------------------------------
+ROW_NUMBER()
+RANK()
+DENSE_RANK() .
+LEAD()
+LAG()
+
+
+
+
+
+SQL CLAUSE SEQUENCE
+-------------------------------------
+
+SELECT DISTINCT column, AGG_FUNC(column_or_expression), …
+FROM mytable
+    JOIN another_table
+      ON mytable.column = another_table.column
+    WHERE constraint_expression
+    GROUP BY column
+    HAVING constraint_expression
+    ORDER BY column ASC/DESC
+    LIMIT no_of_rows to display OFFSET rows_to_skip;
 
 
 
@@ -1066,8 +1091,187 @@ UNION ALL
 
 
 
+mysql> CREATE TABLE t (qty INT, price INT);
+mysql> INSERT INTO t VALUES(3, 50), (5, 60);
+mysql> CREATE VIEW v AS SELECT qty, price, qty*price AS value FROM t;
+mysql> SELECT * FROM v;
 
 
+---------------------------------------------------------------------------------------------------
+MYSQL EXPLAIN AND ANALYZE
+------------------------------------------------------------------------------------------------
+select * from pc_student_info where student_name='Pradeep';
+
+explain analyze select * from pc_student_info where student_name='Pradeep';
+
+explain analyze select * from pc_student_info where reg_number='MB222305';
+
+explain analyze select * from pc_student_info where contact_number='8239947383';
+
+explain analyze select * from pc_student_info where address='Warje Pune';
+
+create index addr_index on pc_student_info(address);
+
+desc pc_student_info;
+
+explain analyze select * from pc_student_info where address='Warje Pune';
+
+
+
+
+select e.*,d.name from employee e join department d on e.dept_id=d.id;
+
+
+select d.id,d.name,count(e.id) from employee e join department d on e.dept_id=d.id 
+GROUP BY d.id,d.name;
+
+
+select d.id,d.name,sum(e.salary) from employee e join department d on e.dept_id=d.id 
+GROUP BY d.id,d.name;
+
+
+select d.id,d.name,avg(e.salary) from employee e join department d on e.dept_id=d.id 
+GROUP BY d.id,d.name;
+
+
+select d.id,d.name,max(e.salary) from employee e join department d on e.dept_id=d.id 
+GROUP BY d.id,d.name;
+
+select d.id,d.name,min(e.salary) from employee e join department d on e.dept_id=d.id 
+GROUP BY d.id,d.name;
+
+
+
+select d.id,d.name,count(e.id),sum(e.salary),avg(e.salary),max(e.salary),min(e.salary) from employee e join department d on e.dept_id=d.id 
+GROUP BY d.id,d.name;
+
+
+
+select d.id,d.name,count(e.id),sum(e.salary),avg(e.salary),max(e.salary),min(e.salary) from employee e join department d on e.dept_id=d.id 
+GROUP BY d.id,d.name
+HAVING count(e.id)=2
+;
+
+
+
+select d.id,d.name,count(e.id),sum(e.salary),avg(e.salary),max(e.salary),min(e.salary) from employee e join department d on e.dept_id=d.id 
+GROUP BY d.id,d.name
+HAVING max(e.salary) < 150000
+ORDER BY d.name DESC
+LIMIT 2 OFFSET 0
+;
+
+
+
+MySQL - RANK vs DENSE_RANK vs ROW_NUMBER - Different Tie Handling Approaches
+-------------------------------------------------------------------------------------------------------------------------------
+
+CREATE TABLE StudentScores
+    (`gender` varchar(1), `student` varchar(8), `score` int)
+;
+
+INSERT INTO StudentScores
+    (`gender`, `student`, `score`)
+VALUES
+    ('M', 'Tobi', 92),
+    ('M', 'Tom', 92),
+    ('M', 'Sam', 89),
+    ('M', 'Ron', 100),
+    ('F', 'Mary', 97),
+    ('F', 'Emily', 95),
+    ('F', 'Jennifer', 89),
+    ('F', 'Lori', 89),
+    ('F', 'Audra', 84);
+
+
+
+
+-- ROW_NUMBER breaks the tie
+--------------------------------------------
+
+SELECT *
+	,ROW_NUMBER() OVER (
+		ORDER BY score DESC
+		) AS RowNum
+FROM StudentScores
+
+
+-- RANK() keeps the tie and skip numbers
+-------------------------------------------------------------
+SELECT *
+	,RANK() OVER (
+		ORDER BY score DESC
+		) AS RankNum
+FROM StudentScores;
+
+
+-- DENSE_RANK() keeps the tie as well, but does NOT skip numbers
+----------------------------------------------------------------------------------------------
+SELECT *
+	,DENSE_RANK() OVER (
+		ORDER BY score DESC
+		) AS DenseRankNum
+FROM StudentScores;
+
+
+
+
+
+SELECT *
+	,ROW_NUMBER() OVER (
+		ORDER BY score DESC
+		) AS RONUMBER
+                   ,RANK() OVER (
+		ORDER BY score DESC
+		) AS RankNum
+                   ,DENSE_RANK() OVER (
+		ORDER BY score DESC
+		) AS DenseRankNum
+	
+FROM StudentScores;
+
+
+
+SELECT *
+	,lead(score) OVER (
+		ORDER BY score DESC
+		) AS  lead_value
+
+	,lag(score) OVER (
+		ORDER BY score DESC
+		) AS  lead_value
+                   	
+FROM StudentScores;
+
+
+----------------------------------------
+
+The LEAD() and LAG() function in MySQL are used to get preceding and succeeding value of any row within its partition. These functions are termed as nonaggregate Window functions.
+
+
+
+SELECT *
+	,lead(score,3) OVER (
+		ORDER BY score DESC
+		) AS  lead_value
+
+	,lag(score,3) OVER (
+		ORDER BY score DESC
+		) AS  lead_value
+                   	
+FROM StudentScores;
+
+
+SELECT *
+	,lead(score,3,0) OVER (
+		ORDER BY score DESC
+		) AS  lead_value
+
+	,lag(score,3,0) OVER (
+		ORDER BY score DESC
+		) AS  lead_value
+                   	
+FROM StudentScores;
 
 
 
