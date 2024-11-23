@@ -1,0 +1,1395 @@
+RDBMS (MySQL)     16 hours
+----------------------------------------
+https://github.com/vishalfed/sql
+
+Day1 : 12-Nov-2024   
+----------------------------------------
+Program/Software/Application/Product/Service
+
+
+Application
+----------------
+Desktop
+Mobile
+Web
+Hybrid
+PWA
+SPA
+
+
+C -> CREATE
+R -> READ/RETRIEVE
+U -> UPDATE
+D -> DELETE
+
+
+Database  (Collection Of Data)
+--------------------------------------------
+array/collection
+txt,word,pdf,excel,xml
+RDBMS -> MySQL,Oracle,Postgres
+NOSQL -> MongoDB,Cassendra,Hbase,
+Cloud -> Google Cloud
+
+
+
+RDBMS (Relational Database System)
+------------------------------------------------------
+Relation -> Table
+Tupple  -> Row,Record,Document
+
+Stores the data in tabular format
+-----------------------------------------------------
+Employee
+--------------
+id   fname lname  email salary  dept_id   dept_name   mgr_id  city designation   dob doj
+
+
+101  Amol  Kale    a@gmail.com 12000   11   Sales      __         Pune  CEO
+
+number  text/string   date
+
+
+SQL
+------
+DDL - Data Defintion Lanaguage  => CREATE,ALTER,DROP
+DML - Data MAnipulation Language => INSERT,UPDATE,DELETE
+DRL - Data Retrieval Language  => SELECT
+TCL - Tranasaction Control Language => COMMIT,ROLLBACK
+
+MySQL -> (Client - Server)  ->https://dev.mysql.com/downloads/installer/
+
+https://dev.mysql.com/doc/refman/8.0/en/
+----------------------------------------------------
+
+CUI -> MySQL Client
+GUI -> MySQL Workbench
+
+Default port :3306
+Default usernmae :root
+
+Database => Tables,Views,Functions,Stored Procedures 
+
+show databases;
+drop database pc_company;
+
+create database pc_company;
+
+use pc_company;
+
+
+create table employee(
+id int,
+name text,
+salary float
+); 
+
+show tables;
+desc employee;
+describe employee;
+
+
+insert into employee values(101,'AMOL',10000);
+insert into employee values(102,'SACHIN',20000);
+insert into employee values(102,'MOHAN',30000);
+insert into employee (name) values('MOHAN');
+insert into employee (salary,name,id) values(45000,'MOHAN',104);
+
+
+
+
+select * from employee;
+select * from employee where salary=null;
+select * from employee where salary=NULL;
+
+select * from employee where salary is null;
+select * from employee where salary is NULL;
+
+
+select * from employee where salary is NOT null;
+select * from employee where salary is NOT NULL;
+
+select name,salary from employee;
+select * from employee where name='mohan';
+select * from employee where name='MOHAN';
+
+alter table employee add column is_married text;
+alter table employee modify column is_married varchar(10) unique;
+alter table employee drop column is_married;
+
+
+Day2 : 13-Nov-2024  
+----------------------------
+SQL Types
+----------------
+DDL -> CREATE,ALTER,DROP
+DML -> INSERT,UPDATE,DELETE
+DRL -> SELECT
+TCL -> COMMIT,ROLLBACK
+------------------------------------------------
+A  ->ATOMOCITY
+C -> CONSISENCY
+I  -> ISOLATION
+D -> DURABLE
+
+
+NOSQL
+-----------
+C -> COSNSISTENCY
+       -> Weak
+       -> Eventual
+       -> Strong  
+A -> AVAILABILITY
+P -> PARTION TOLEREANCE
+
+Employee
+--------------
+id   fname lname  email salary  dept_id   dept_name   mgr_id  city designation   dob doj
+
+
+primary key = (not null,unique)
+
+drop table employee;
+
+create table employee(
+id int primary key,
+fname text,
+lname text, 
+email  varchar(20) not null unique,
+salary float, 
+dept_id int default 11,
+dept_name varchar(20) default 'Training',
+mgr_id int,
+city text,
+designation text,
+dob date,
+doj  date
+);
+
+desc employees;
+
+
+
+alter table employee modify doj datetime default CURRENT_TIMESTAMP;
+alter table employee modify dob date CHECK (dob <sysdate());
+alter table employee drop column city;
+alter table employee add column city text;
+alter table employee modify column id int AUTO_INCREMENT;
+alter table employee modify designation varchar(20) default 'graduate_hire';
+
+
+insert into employee (fname,lname,email,salary,dob,city) values('sachin','Tendulkar','Sachin@gmail.com',12000,'1972-07-24','MUMBAI');
+insert into employee (fname,lname,email,salary,dob,city) values('virendra','Sehwag','Virendra@gmail.com',15000,'1985-07-24','MUMBAI');
+insert into employee (fname,lname,email,salary,dob,city) values('Mohan','Shende','Mohan@gmail.com',12000,'1978-07-24','MUMBAI');
+insert into employee (fname,lname,email,salary,dob,city) values('Sumit','Raghvan','Sumit@gmail.com',12000,'1977-07-24','SOLAPUR');
+insert into employee (fname,lname,email,salary,dob,city) values('Sumit','Patil','Sumit1@gmail.com',13000,'2025-07-24','SOLAPUR');
+
+insert into employee (fname,lname,email,salary,dob,city) values('Prakash','Patil','Prakash@gmail.com',12000,'1992-07-24','PUNE');
+
+
+insert into employee (fname,lname,email,salary,dob,city) values('Prakash','Patil','Prakash@gmail.com',12000,'1992-07-24','PUNE');
+
+insert into employee (fname,lname,salary,dob,city) values('Prakash','Patil',12000,'1992-07-24','PUNE');
+
+
+insert into employee (fname,lname,email,salary,dob,city,dept_id,dept_name) values('sachin','Tendulkar','Sachin1@gmail.com',12000,'1972-07-24','MUMBAI',12,'Sales');
+insert into employee (fname,lname,email,salary,dob,city,dept_id,dept_name) values('sachin','Tendulkar','Sachin2@gmail.com',12000,'1972-07-24','MUMBAI',12,'Sales');
+
+insert into employee (fname,lname,email,salary,dob,city,dept_id,dept_name) values('sachin','Tendulkar','Sachin3@gmail.com',12000,'1972-07-24','MUMBAI',13,'IT');
+insert into employee (fname,lname,email,salary,dob,city,dept_id,dept_name) values('sachin','Tendulkar','Sachin4@gmail.com',12000,'1972-07-24','MUMBAI',13,'IT');
+
+
+
+
+
+
+Day3 : 14-Nov-2024
+---------------------------
+- SQL Operators - =,<,<=,>,>=, IN, BETWEEN, OR, AND,LIKE,NOT LIKE 
+- SQL Functions - max(),min(),sum(),avg(),count(),sysdate()
+           round(),floor(),ceil() 
+          Aggregate/Single Row - max(),min(),sum(),avg(),count()
+- SQL Clauses - Sequences
+- SQL Joins
+
+
+- SELECT * FROM EMPLOYEE WHERE SALARY>=10000 AND SALARY <=15000;
+- SELECT * FROM EMPLOYEE WHERE SALARY BETWEEN 10000 AND 15000;
+- SELECT * FROM EMPLOYEE WHERE SALARY>10000 AND SALARY <15000;
+- SELECT * FROM EMPLOYEE WHERE CITY='PUNE' OR CITY='SOLAPUR';
+- SELECT * FROM EMPLOYEE WHERE CITY IN ('PUNE','SOLAPUR');
+- SELECT * FROM EMPLOYEE WHERE FNAME LIKE 's%';
+- SELECT * FROM EMPLOYEE WHERE FNAME LIKE '%n';
+- SELECT * FROM EMPLOYEE WHERE FNAME LIKE 's%n';
+- SELECT * FROM EMPLOYEE WHERE FNAME LIKE '__a%';
+- SELECT * FROM EMPLOYEE WHERE FNAME NOT LIKE 's%';
+- SELECT * FROM EMPLOYEE WHERE FNAME NOT LIKE '%n';
+- SELECT * FROM EMPLOYEE WHERE CITY NOT IN ('PUNE','SOLAPUR');
+- SELECT * FROM EMPLOYEE WHERE mgr_id is null;
+- SELECT * FROM EMPLOYEE WHERE mgr_id is not null;
+- SELECT * FROM EMPLOYEE ORDER BY fname ASC;
+- SELECT * FROM EMPLOYEE ORDER BY dob ASC;
+- SELECT * FROM EMPLOYEE ORDER BY dob DESC;
+- SELECT * FROM EMPLOYEE WHERE DOB IN ('1999-07-24','1972-07-24');
+- SELECT MAX(SALARY) FROM EMPLOYEE;
+- SELECT MIN(SALARY) FROM EMPLOYEE;
+- SELECT SUM(SALARY) FROM EMPLOYEE;
+- SELECT AVG(SALARY) FROM EMPLOYEE;
+- SELECT COUNT(SALARY) FROM EMPLOYEE;
+- SELECT COUNT(mgr_id) FROM EMPLOYEE;
+- SELECT MAX(SALARY),MIN(SALARY),SUM(SALARY),AVG(SALARY),COUNT(SALARY),COUNT(MGR_ID) FROM EMPLOYEE;
+
+- SELECT FNAME,LNAME FROM EMPLOYEE;
+- SELECT FNAME AS FIRST_NAME,LNAME AS LAST_NAME FROM EMPLOYEE;
+- SELECT concat(fname,'   ',lname) AS FULL_NAME,length(concat(fname,'   ',lname)) AS LENGTH FROM EMPLOYEE;
+- SELECT upper(concat(fname,'   ',lname)) AS FULL_NAME,length(concat(fname,'   ',lname)) AS LENGTH FROM EMPLOYEE;
+- SELECT * FROM EMPLOYEE WHERE SALARY=(SELECT MIN(SALARY) FROM EMPLOYEE);
+- SELECT * FROM EMPLOYEE WHERE SALARY=(SELECT MAX(SALARY) FROM EMPLOYEE);
+- SELECT CITY FROM EMPLOYEE;
+- SELECT DISTINCT CITY FROM EMPLOYEE;
+- SELECT ID,FNAME,DOB FROM EMPLOYEE;
+- SELECT ID,FNAME,DATE_FORMAT(DOB,'%d-%b-%Y %h:%i:%s') FROM EMPLOYEE;
+- SELECT DATEDIFF(sysdate(),dob) from employee;
+- SELECT DATEDIFF(sysdate(),dob)/365 from employee;
+- SELECT floor(DATEDIFF(sysdate(),dob)/365) from employee;
+- SELECT ID,FNAME,floor(DATEDIFF(sysdate(),dob)/365) AS AGE from employee;
+- SELECT ID,FNAME,floor(DATEDIFF(dob,'2024-11-14')/365) AS AGE from employee;
+- SELECT ID,FNAME,floor(DATEDIFF('2024-11-14',dob)/365) AS AGE from employee;
+-  SELECT EXTRACT(YEAR FROM sysdate()); 
+-  SELECT EXTRACT(YEAR FROM dob) FROM EMPLOYEE;
+- SELECT EXTRACT(YEAR FROM sysdate())-EXTRACT(YEAR FROM dob) FROM EMPLOYEE;
+- SELECT ID,FNAME,EXTRACT(YEAR FROM sysdate())-EXTRACT(YEAR FROM dob) AS AGE FROM EMPLOYEE;
+
+
+ 
+
+ 
+
+JOINS
+---------
+create table course(id int primary key,name text,price float);
+
+insert into course values(11,'Java',1000);
+insert into course values(12,'Angular',2000);
+insert into course values(13,'SQL',3000);
+insert into course values(14,'RDBMS',4000);
+
+
+create table student(id int primary key,name text,cid int);
+
+insert into student values(1,'AMOL',11);
+insert into student values(2,'AJAY',11);
+insert into student values(3,'AMIT',12);
+insert into student values(4,'RAM',12);
+insert into student values(5,'SUNIL',15);
+insert into student values(6,'RAJA',16);
+
+Inner
+---------
+SELECT s.id,s.name,c.id,c.name,c.price   FROM COURSE c JOIN STUDENT s WHERE c.id=s.cid;
+SELECT s.id,s.name,c.id,c.name,c.price   FROM COURSE c INNER JOIN STUDENT s WHERE c.id=s.cid;
+
+Left Outer
+-------------
+SELECT c.id,c.name,c.price,s.id,s.name   FROM COURSE c LEFT JOIN STUDENT s ON c.id=s.cid;
+SELECT c.id,c.name,c.price,s.id,s.name   FROM COURSE c LEFT OUTER JOIN STUDENT s ON c.id=s.cid;
+
+
+RIGHT Outer
+-------------
+SELECT c.id,c.name,c.price,s.id,s.name   FROM COURSE c RIGHT JOIN STUDENT s ON c.id=s.cid;
+SELECT c.id,c.name,c.price,s.id,s.name   FROM COURSE c RIGHT OUTER JOIN STUDENT s ON c.id=s.cid;
+
+
+
+Day4 :14-Nov-2024
+---------------------------
+- Types of Keys - https://www.javatpoint.com/dbms-keys
+- Referential Integrity (Foreign Key)
+- Group by
+- having
+
+
+id
+name
+salary
+deptid
+mobile
+email
+dob
+doj
+
+
+(id+name)
+(id+name+salary)
+
+
+Foreign Key  Example
+------------------------------
+
+drop table course;
+drop table student;
+
+create table course(id int primary key,name text,price float);
+
+insert into course values(11,'Java',1000);
+insert into course values(12,'Angular',2000);
+insert into course values(13,'SQL',3000);
+insert into course values(14,'RDBMS',4000);
+
+
+create table student(
+id int primary key,
+name text,
+cid int,
+FOREIGN KEY (cid)
+        REFERENCES course(id)
+);
+
+-------------
+
+create table student(
+id int primary key,
+name text,
+cid int,
+FOREIGN KEY (cid)
+        REFERENCES course(id)
+ON DELETE CASCADE
+);
+
+----------------------------
+
+create table student(
+id int primary key,
+name text,
+cid int,
+FOREIGN KEY (cid)
+        REFERENCES course(id)
+ON DELETE CASCADE
+ON UPDATE CASCADE
+);
+
+
+
+
+
+
+insert into student (id,name,cid) values(1,'AMOL',11);
+insert into student values(2,'AJAY',11);
+insert into student values(3,'AMIT',12);
+insert into student values(4,'RAM',12);
+insert into student values(5,'SUNIL',15);
+insert into student values(6,'RAJA',16);
+
+
+alter table student drop foreign key student_ibfk_1;
+
+--------------------------------------------------------------------------------
+
+Dept    (Parent)                                 Employee  (Child)
+------------------------------------------------------------------------------------------------
+id (P.K)  name                                     eid       ename     deptid(foregin key)
+-------------------------------------------------------------------------------
+11         IT                                             101      Amol        11 
+12         Sales
+13         Support
+14         Accounts
+
+-------------------------------------------------------------------------------------------------------------
+
+SELECT Syntax
+--------------------
+
+SELECT column1, column2, aggregate_function(column)
+FROM table_name join
+GROUP BY column1, column2, ...
+HAVING condition
+ORDER BY column1, column2, ...;
+
+
+
+
+SELECT MAX(SALARY),MIN(SALARY),SUM(SALARY),AVG(SALARY),COUNT(SALARY) FROM EMPLOYEE;
+
+
+SELECT DEPT_ID,DEPT_NAME,MAX(SALARY),MIN(SALARY),SUM(SALARY),AVG(SALARY),COUNT(SALARY) FROM EMPLOYEE GROUP BY DEPT_ID,DEPT_NAME;
+
+
+SELECT DEPT_ID,DEPT_NAME,MAX(SALARY),MIN(SALARY),SUM(SALARY),AVG(SALARY),COUNT(SALARY) FROM EMPLOYEE GROUP BY DEPT_ID,DEPT_NAME HAVING sum(salary) <12000;
+
+
+SELECT DEPT_ID,DEPT_NAME,MAX(SALARY),MIN(SALARY),SUM(SALARY),AVG(SALARY),COUNT(SALARY) FROM EMPLOYEE GROUP BY DEPT_ID,DEPT_NAME HAVING count(salary)=2;
+
+
+
+SELECT DEPT_ID,DEPT_NAME,MAX(SALARY),MIN(SALARY),SUM(SALARY),AVG(SALARY) FROM EMPLOYEE GROUP BY DEPT_ID,DEPT_NAME HAVING count(salary)>=2 ORDER BY DEPT_NAME DESC;
+
+SELECT DEPT_ID,DEPT_NAME,MAX(SALARY),MIN(SALARY),SUM(SALARY),AVG(SALARY) FROM EMPLOYEE GROUP BY DEPT_ID,DEPT_NAME HAVING count(salary)>=2 ORDER BY DEPT_NAME ASC;
+
+
+
+
+Day5 :16-Nov-2024
+------------------------------
+- Common Table Expressions 
+                  (https://dev.mysql.com/doc/refman/8.0/en/with.html)
+- Window Functions - RANK(),DENSE_RANK(),ROW_NUMBER() 
+                  https://dev.mysql.com/doc/refman/8.4/en/window-functions-usage.html
+
+                   https://www.c-sharpcorner.com/article/rank-denserank-and-rownumber-functions-in-sql-server/
+
+
+- STORED PROCEDURE,FUNCTIONS
+                   https://dev.mysql.com/doc/refman/8.4/en/create-procedure.html 
+
+
+
+CTE Syntax
+-------------------------
+WITH
+  cte1 AS (SELECT a, b FROM table1),
+  cte2 AS (SELECT c, d FROM table2)
+SELECT b, d FROM cte1 JOIN cte2
+WHERE cte1.a = cte2.c;
+
+
+WITH
+   temp AS (SELECT id,fname,lname,salary,city from employee)
+SELECT id,concat(fname,' ',lname) as 'FULL_NAME' from temp; 
+
+
+WITH
+   temp AS (SELECT id,fname,lname,salary,city from employee)
+SELECT id,concat(fname,' ',lname) as 'FULL_NAME' from temp WHERE CITY='SOLAPUR';
+ 
+
+
+WITH
+   temp AS (SELECT id,fname,lname,salary,city from employee)
+SELECT t.id,concat(t.fname,' ',t.lname) as 'FULL_NAME',t.city from temp t WHERE t.CITY='SOLAPUR';
+ 
+WITH
+   temp AS (SELECT id,fname,lname,salary,city from employee)
+SELECT t.id,concat(t.fname,' ',t.lname) as 'FULL_NAME',t.city from temp t WHERE t.CITY NOT IN ('SOLAPUR');
+
+ 
+
+Window Functions
+------------------------
+
+select id,fname,lname,dept_id,dept_name,salary from employee;
+
+
+select id,fname,lname,dept_id,dept_name,salary,row_number() over() from employee;
+
+
+select 
+id,
+fname,
+lname,
+dept_id,
+dept_name,
+salary,
+row_number() over() as row_num from employee;
+
+
+
+select 
+id,
+fname,
+lname,
+dept_id,
+dept_name,
+salary,
+row_number() over(ORDER BY SALARY DESC) as row_num,
+rank() over(ORDER BY SALARY DESC) emp_rank,
+dense_rank() over(ORDER BY SALARY DESC) emp_dense_rank
+from employee;
+
+
+
+select 
+id,
+fname,
+lname,
+dept_id,
+dept_name,
+salary,
+row_number() over(PARTITION BY dept_id ORDER BY SALARY DESC) as row_num,
+rank() over(PARTITION BY dept_id ORDER BY SALARY DESC) emp_rank,
+dense_rank() over(PARTITION BY dept_id ORDER BY SALARY DESC) emp_dense_rank
+from employee;
+
+
+
+
+
+
+
+
+
+select 
+id,
+fname,
+lname,
+dept_id,
+dept_name,
+salary,
+rank() over() as rank
+from employee;
+
+
+- STORED PROCEDURE,FUNCTIONS
+------------------------------------------------------
+delimeter //
+CREATE PROCEDURE showEmpDetails(IN eid int, OUT f_name text, OUT l_name text, OUT e_salary double)
+       BEGIN
+         SELECT fname,lname,salary INTO f_name,l_name,e_salary FROM employee
+         WHERE id = eid;
+ END//
+
+
+call showEmpDetails(1,@fname,@lname,@salary);
+
+select @fname,@lname,@salary;
+
+
+
+Function
+--------------
+  delimiter //
+  CREATE FUNCTION getEmpDetails(eid int)
+      RETURNS CHAR(100) DETERMINISTIC
+      BEGIN
+    DECLARE details CHAR(100);
+    SELECT CONCAT(id,fname,lname,salary) into details FROM employee WHERE id=eid;
+     RETURN details;
+
+  END// 
+delimiter ;
+
+
+select getEmpDetails(1);
+
+
+
+Day6 : 18-Nov-2024
+----------------------------
+  1) MYSQL SET Operations
+          https://dev.mysql.com/doc/refman/8.4/en/set-operations.html
+
+  2)  MYSQL Index 
+          https://dev.mysql.com/doc/refman/8.4/en/mysql-indexes.html    
+  
+  3)  Transaction   -> 
+
+          BEGIN,COMMIT,ROLLBACK
+
+
+create table top_rated_movies(id int, name text);
+
+insert into top_rated_movies values
+ (1,'sholay'),
+ (2,'ghayal'),
+ (3,'ghatak'),
+ (4,'damini');
+
+
+create table most_liked_movies(id int, name text);
+
+insert into most_liked_movies values
+ (1,'sholay'),
+ (2,'ghayal'),
+ (3,'ddlj'),
+ (4,'ddph');
+
+ 
+select * from top_rated_movies union select * from most_liked_movies;
+
+select * from top_rated_movies union all select * from most_liked_movies;
+
+select * from top_rated_movies except select * from most_liked_movies;
+
+select * from top_rated_movies intersect select * from most_liked_movies;
+
+
+explain analyze select * from top_rated_movies where id=4;
+
+create index movie_index on top_rated_movies(id);
+
+explain analyze select * from top_rated_movies where id=4;
+
+
+
+Tranaction
+---------------
+drop database bank;
+create database bank;
+use bank;
+create table accounts(accno int primary key ,name text,balance float);
+insert into accounts values(101,'AMOL',12000);
+insert into accounts values(102,'SACHIN',22000);
+insert into accounts values(103,'AMOL',32000);
+
+select * from accounts;
+
+
+
+BEGIN / START TRANSACTION command is used to start the transaction.
+
+1) SET autocommit = 0;  
+1) SET autocommit = OFF;  
+2) BEGIN;
+3) START TRANSACTION;
+
+
+COMMIT;  / END TRANSACTION;  successfull execution
+
+COMMIT;
+
+
+ROLLBCK;  abort the trasnaction
+ 
+ROLLBACK;
+
+
+
+Day7 : 19-Nov-2024
+----------------------------
+UMS - SQL Activity 1 & SQL Activity2
+--------------------------------------------------
+
+Problem # 1 Creating Tables 
+
+
+create database sms_db;
+
+use sms_db;
+
+i)
+
+create table student_info_pc(
+reg_number varchar(30) primary key,
+student_name varchar(30) not null,
+branch varchar(30),
+contact_number varchar(30),
+date_of_birth date not null,
+date_of_joining date default (sysdate()),
+address varchar(250),
+email varchar(250)
+);
+
+
+ii)
+
+
+create table subject_master_pc(
+subject_code varchar(10) primary key,
+subject_name varchar(30) not null,
+weightage int not null
+);
+
+
+iii)
+
+create table student_marks_pc(
+reg_number varchar(30),
+subject_code varchar(10),
+semester int not null,
+marks int not null default (0),
+foreign key (reg_number) references student_info_pc(reg_number),
+foreign key (subject_code) references subject_master_pc(subject_code)
+);
+
+
+iv)
+create table student_result_pc(
+reg_number varchar(30),
+semester int not null,
+gpa int not null,
+is_eligible_scholarship char(3) default 'yes',
+foreign key (reg_number) references student_info_pc(reg_number)
+);
+
+
+
+Problem # 2 Working with constraints:
+-------------------------------------------------------
+a)
+
+alter table  subject_master_pc modify column subject_name varchar(30) not null unique;
+
+
+b)
+
+alter table  student_info_pc modify column contact_number varchar(10) not null unique;
+
+
+c)
+alter table student_info_pc modify column date_of_birth date not null CHECK (date_of_birth < sysdate());
+
+d)
+alter table student_marks_pc  modify column marks int default (0) CHECK (marks <=100);
+
+
+e)
+
+alter table student_result_pc  modify column gpa int not null CHECK (gpa <=10);
+
+f)
+
+alter table student_result_pc  modify column is_eligible_scholarship char(1) default ('Y') CHECK ( is_eligible_scholarship='Y' OR is_eligible_scholarship='N');
+
+
+
+
+Problem # 3  Loading tables using DML:  
+-------------------------------------------------------
+
+a)
+
+insert into student_info_pc values
+ ('MC101301','James','MCA','9714589787',STR_TO_DATE('12-jan-1984','%d-%b-%Y'),STR_TO_DATE('08-jul-2010','%d-%b-%Y'),'No 10 South Block,Nivea','james.mca@yahoo.com'),
+(
+'BEC111402','Manio', 'ECE','8912457875',STR_TO_DATE('23-feb-1983','%d-%b-%Y'),STR_TO_DATE('25-jun-2011','%d-%b-%Y'),'8/12,Park View,Sieera',	'manioma@gmail.com'),
+(
+'BEEI101204','Mike','EI','8974567897',STR_TO_DATE('10-feb-1983','%d-%b-%Y'),STR_TO_DATE('25-aug-2010','%d-%b-%Y'),'Cross villa,NY',	'mike.james@ymail.com'),
+(
+'MB111305','Paulson','MBA','8547986123',STR_TO_DATE('13-dec-1984','%d-%b-%Y'),STR_TO_DATE('08-aug-2010','%d-%b-%Y'),'Lake view,NJ',	'paul.son@rediffmail.com'),
+(
+'MB222305','Pradeep','MBA','8239947383',STR_TO_DATE('13-dec-2011','%d-%b-%Y'),STR_TO_DATE('08-aug-2011','%d-%b-%Y'),'Warje Pune',NULL);
+
+
+select * from pc_student_info;
+
+b)
+
+insert into subject_master_pc values
+('EE01DCF','DCF',30),
+('EC02MUP','Microprocessor',40), 
+('MC06DIP','Digital Image Processing',30),
+('MB03MAR','Marketing Techniques',20),
+('EI05IP','Instrumentation Precision',40),
+('CPSC02DS','Data Structures',40);
+
+SELECT * FROM subject_master_pc;
+
+c)
+
+INSERT INTO STUDENT_MARKS_PC VALUES('MC101301','EE01DCF',	1,	75);
+INSERT INTO STUDENT_MARKS_PC VALUES('MC101301','EC02MUP',	1,	65);
+INSERT INTO STUDENT_MARKS_PC VALUES('MC101301','MC06DIP',	1,	70);
+INSERT INTO STUDENT_MARKS_PC VALUES('BEC111402','EE01DCF',	1,	55);
+INSERT INTO STUDENT_MARKS_PC VALUES('BEC111402','EC02MUP',	1,	80);
+INSERT INTO STUDENT_MARKS_PC VALUES('BEC111402','MC06DIP',	1,	60);
+INSERT INTO STUDENT_MARKS_PC VALUES('BEEI101204','EE01DCF',	1,	85);
+INSERT INTO STUDENT_MARKS_PC VALUES('BEEI101204','EC02MUP',	1,	78);
+INSERT INTO STUDENT_MARKS_PC VALUES('BEEI101204','MC06DIP',	1,	80);
+INSERT INTO STUDENT_MARKS_PC VALUES('BEEI101204','MB03MAR',	2,	75);
+INSERT INTO STUDENT_MARKS_PC VALUES('BEEI101204','EI05IP',	2,	65);
+INSERT INTO STUDENT_MARKS_PC VALUES('BEEI101204','CPSC02DS',    2,	75);
+INSERT INTO STUDENT_MARKS_PC VALUES('MB111305','EE01DCF',	1,	65);
+INSERT INTO STUDENT_MARKS_PC VALUES('MB111305','EC02MUP',	1,	68);
+INSERT INTO STUDENT_MARKS_PC VALUES('MB111305','MC06DIP',	1,	63);
+INSERT INTO STUDENT_MARKS_PC VALUES('MB111305','MB03MAR',	2,	85);
+INSERT INTO STUDENT_MARKS_PC VALUES('MB111305','EI05IP',	2,	74);
+INSERT INTO STUDENT_MARKS_PC VALUES('MB111305','CPSC02DS',      2,	62);
+
+
+SELECT * FROM STUDENT_MARKS_PC;
+
+
+d)
+
+
+INSERT INTO STUDENT_RESULT_PC VALUES('MC101301',1,7.5,'Y');
+INSERT INTO STUDENT_RESULT_PC VALUES('BEC111402',1,7.1,'Y');
+INSERT INTO STUDENT_RESULT_PC VALUES('BEEI101204',1,8.3,'Y');
+INSERT INTO STUDENT_RESULT_PC VALUES('BEEI101204',2,6.9,'N');
+INSERT INTO STUDENT_RESULT_PC VALUES('MB111305',1,6.5,'N');
+INSERT INTO STUDENT_RESULT_PC VALUES('MB111305',2,6.8,'N');
+
+SELECT * FROM STUDENT_RESULT_PC;
+
+
+
+
+Problem # 4 Perform the following operations:  
+-----------------------------------------------------------------
+
+a)
+update student_info_pc set reg_number='MC101212' where student_name='James';
+
+b)
+update subject_master_pc set subject_code='DS0112' where subject_name='Data structures';
+
+c)
+
+insert into subject_master_pc(subject_code,subject_name) values('DS0112','Advanced DS');
+
+d)
+update student_info_pc set contact_number='8912457875' where student_name='Paulson';
+
+e)
+
+select reg_number from student_info_pc where student_name='James';
+
+select subject_code from subject_master_pc where subject_name='DCF';
+
+update student_marks_pc set marks=120 where 
+reg_number=(select reg_number from student_info_pc where student_name='James') 
+AND 
+subject_code=(select subject_code from subject_master_pc where subject_name='DCF');
+
+f)
+
+select reg_number from student_info_pc where student_name='Mike';
+
+update student_result_pc set gpa=11 where reg_number=(select reg_number from student_info_pc where student_name='Mike');
+
+
+Day8 : 20-Nov-2024
+-------------------
+SQL Activity 3
+
+
+1)
+
+select * from student_info_pc where email is not null;
+
+2)
+select branch,count(reg_number) from student_info_pc group by branch;
+
+
+3)
+select reg_number,marks from student_marks_pc where marks>50;
+
+
+4)
+
+select si.reg_number,si.student_name,sr.gpa from student_info_pc si join student_result_pc sr where si.reg_number=sr.reg_number order by sr.gpa desc;
+
+5)
+select * from student_info_pc order by student_name;
+
+6)
+
+select * from student_info_pc order by date_of_birth;
+
+select * from student_info_pc order by date_of_birth desc;
+
+7)
+
+select si.reg_number,si.student_name,sb.subject_name,sm.semester,sm.marks from student_info_pc si join student_marks_pc sm join subject_master_pc sb where si.reg_number=sm.reg_number and sb.subject_code=sm.subject_code;
+
+
+8)
+
+
+select si.reg_number,si.student_name,sb.subject_name,sm.semester,sm.marks from student_info_pc si join student_marks_pc sm join subject_master_pc sb where si.reg_number=sm.reg_number and sb.subject_code=sm.subject_code order by si.reg_number,sm.semester; 
+
+
+9)
+
+select si.reg_number,si.student_name,concat(sb.subject_code,'-',sb.subject_name),sm.semester,sm.marks from student_info_pc si join student_marks_pc sm join subject_master_pc sb where si.reg_number=sm.reg_number and sb.subject_code=sm.subject_code and sm.marks > 70 order by si.reg_number,sm.semester; 
+
+10)
+
+select reg_number,gpa,is_eligible_scholarship from student_result_pc order by is_eligible_scholarship desc;
+
+11)
+
+select si.reg_number,si.student_name,sr.semester,sr.gpa from student_info_pc si join student_result_pc sr on si.reg_number=sr.reg_number order by sr.gpa desc;
+
+
+12)
+
+((sm.marks* sb.weightage)%/100)
+
+select si.reg_number,si.student_name,sb.subject_name,sm.semester,sm.marks, (sm.marks* sb.weightage)%100 as Weightage_Marks from student_info_pc si join student_marks_pc sm join subject_master_pc sb where si.reg_number=sm.reg_number and sb.subject_code=sm.subject_code;
+
+13)
+
+select si.* from student_info_pc si where si.student_name like 'M%';
+ 
+
+14)
+
+select si.reg_number,si.student_name,sb.subject_name,sm.semester,sm.marks from student_info_pc si join student_marks_pc sm join subject_master_pc sb where si.reg_number=sm.reg_number and sb.subject_code=sm.subject_code and sm.marks>=60 and sm.marks<=100;
+
+
+select si.reg_number,si.student_name,sb.subject_name,sm.semester,sm.marks from student_info_pc si join student_marks_pc sm join subject_master_pc sb where si.reg_number=sm.reg_number and sb.subject_code=sm.subject_code and sm.marks between 60 and 100;
+
+
+15)
+
+select si.reg_number,si.student_name,sm.marks from student_info_pc si join student_marks_pc sm on si.reg_number=sm.reg_number where si.student_name not like 'J%';
+
+
+select si.reg_number,si.student_name,sm.marks from student_info_pc si join student_marks_pc sm on si.reg_number=sm.reg_number where si.student_name like 'J%';
+
+
+16)
+
+select si.reg_number,si.student_name,sb.subject_code,sm.semester,sm.marks from student_info_pc si join student_marks_pc sm join subject_master_pc sb 
+where si.reg_number=sm.reg_number and sb.subject_code=sm.subject_code and sb.subject_code in ('EE01DCF','EC02MUP');
+
+17)
+
+select si.* from student_info_pc si where si.student_name like '%on';
+
+18)
+
+select si.reg_number,si.student_name,sm.semester,sm.marks from student_info_pc si join student_marks_pc sm join subject_master_pc sb where si.reg_number=sm.reg_number and sb.subject_code=sm.subject_code and si.email is not null;
+
+19) 
+select upper(si.branch),upper(si.student_name) from student_info_pc;
+
+20)
+
+select lower(subject_code),lower(subject_name),weightage from subject_master_pc;
+
+
+Day9 : 21-Nov-2024   
+---------------------------
+SQL Activity 3
+
+21)  
+
+select concat(student_name,' with ',reg_number,' is studying in branch ',branch) as 'Student Details' from student_info_pc;
+
+22)
+
+select reg_number,date_of_birth,date_format(date_of_birth,'%Y/%b/%d') from student_info_pc;
+
+select reg_number,date_of_birth,date_format(date_of_birth,'%M %d,%Y') from student_info_pc;
+
+23)
+
+select student_name,contact_number,email,datediff(sysdate(),date_of_birth)/365 as age from student_info_pc;
+
+select student_name,contact_number,email,ceil(datediff(sysdate(),date_of_birth)/365) as age from student_info_pc;
+
+select student_name,contact_number,email,floor(datediff(sysdate(),date_of_birth)/365) as age from student_info_pc;
+
+select student_name,contact_number,email,round(datediff(sysdate(),date_of_birth)/365) as age from student_info_pc;
+
+select student_name,contact_number,email, extract(year from sysdate())-extract(year from date_of_birth) as age from student_info_pc;
+
+
+24)
+
+select sm.semester,si.reg_number,si.student_name,avg(sm.marks) from student_info_pc si join student_marks_pc sm on sm.reg_number=si.reg_number group by sm.semester,si.reg_number;
+
+25)
+
+select max(marks) from student_marks_pc;
+
+select reg_number from student_marks_pc where marks=(select max(marks) from student_marks_pc);
+
+select reg_number,student_name from student_info_pc where reg_number=(select reg_number from student_marks_pc where marks=(select max(marks) from student_marks_pc));
+
+select reg_number,student_name from student_info_pc where reg_number in (select reg_number from student_marks_pc where marks=(select max(marks) from student_marks_pc));
+
+26)
+select max(marks) from student_marks_pc where subject_code='EI05IP';
+
+select reg_number from student_marks_pc where marks=(select max(marks) from student_marks_pc where subject_code='EI05IP');
+
+select reg_number,student_name from student_info_pc where reg_number=(select reg_number from student_marks_pc where marks=(select max(marks) from student_marks_pc where subject_code='EI05IP'));
+
+27)
+
+select count(*) from student_result_pc where is_eligible_scholarship='Y';
+
+28)
+
+
+select sr.semester,si.reg_number,si.student_name,max(sr.gpa) from student_info_pc si join student_result_pc sr on si.reg_number=sr.reg_number 
+where sr.gpa in (select max(sr.gpa) from student_result_pc group by semester)
+group by sr.semester,si.reg_number;
+
+
+select si.reg_number,si.student_name,sr.semester,sr.gpa from student_info_pc si join student_result_pc sr on si.reg_number=sr.reg_number 
+where sr.gpa in (select max(sr.gpa) from student_result_pc group by semester) order by sr.semester;
+
+
+select si.reg_number,si.student_name,sr.semester,sr.gpa from student_info_pc si join student_result_pc sr on si.reg_number=sr.reg_number 
+where sr.gpa = (select max(sr2.gpa) from student_result_pc sr2 where sr2.semester=sr.semester) order by sr.semester;
+
+
+select si.reg_number,si.student_name,sr.semester,sr.gpa from student_info_pc si join student_result_pc sr on si.reg_number=sr.reg_number 
+where sr.gpa in (select max(sr2.gpa) from student_result_pc sr2 where sr2.semester=sr.semester) order by sr.semester;
+
+29)
+
+select si.reg_number,si.student_name,sr.gpa,sr.is_eligible_scholarship from student_info_pc si join student_result_pc sr on si.reg_number=sr.reg_number where sr.is_eligible_scholarship='Y';
+
+ 30)
+
+select semester,avg(gpa) from student_result_pc group by semester;
+
+31)
+
+
+select si.reg_number,si.student_name,sr.semester,sr.gpa from student_info_pc si join student_result_pc sr on
+si.reg_number=sr.reg_number;
+
+create view STUDENT_GPA_PC AS select si.reg_number,si.student_name,sr.semester,sr.gpa from student_info_pc si join student_result_pc sr on si.reg_number=sr.reg_number;
+
+32)
+select * from STUDENT_GPA_PC;
+
+select * from STUDENT_GPA_PC where gpa>5;
+
+33)
+
+create view STUDENT_AVERAGE_GPA_pc AS select si.reg_number,si.student_name,sr.semester,avg(sr.gpa) as avg_gpa from student_info_pc si join student_result_pc sr on si.reg_number=sr.reg_number group by sr.semester,si.reg_number;
+
+
+34)
+
+select * from STUDENT_AVERAGE_GPA_pc where avg_gpa>7;
+
+
+35)
+
+
+select reg_number,student_name,ifnull(email,'no valid email address') from student_info_pc;
+
+
+select reg_number,student_name,COALESCE(email,'no valid email address') from student_info_pc;
+
+36)
+
+select si.reg_number,si.student_name,si.branch, 
+CASE si.branch WHEN 'ECE' THEN 'Electronics and Communication Engineering' 
+WHEN 'MCA' THEN 'Master Computer Application'           
+WHEN 'MBA' THEN 'Master In Business Administration'           
+ELSE 'this is not in the case'
+END  as 'branch_full_form' from student_info_pc si;
+
+
+
+Day10 : 22-Nov-2024   
+---------------------------
+1) Database Normalization
+2) Mysql Database Backup & Restore
+3) Database SQL Online Practice : https://www.sql-practice.com/
+4) Interview Questions -
+   https://trainings.internshala.com/blog/rdbms-interview-questions-and-answers/
+
+
+Revision
+-------------
+
+SQL constraints are used to specify rules for data in a table.
+
+
+The following constraints are commonly used in SQL:
+
+NOT NULL - Ensures that a column cannot have a NULL value
+UNIQUE - Ensures that all values in a column are different
+PRIMARY KEY - A combination of a NOT NULL and UNIQUE. Uniquely identifies each row in a table
+FOREIGN KEY - Prevents actions that would destroy links between tables
+CHECK - Ensures that the values in a column satisfies a specific condition
+DEFAULT - Sets a default value for a column if no value is specified
+CREATE INDEX - Used to create and retrieve data from the database very quickly
+
+
+MYSQL Data Types
+--------------------------
+String Data Types
+-------------------------
+Data type	Description
+CHAR(size)	A FIXED length string (can contain letters, numbers, and special characters). The size parameter specifies the column length in characters - can be from 0 to 255. Default is 1
+VARCHAR(size)	A VARIABLE length string (can contain letters, numbers, and special characters). The size parameter specifies the maximum column length in characters - can be from 0 to 65535
+BINARY(size)	Equal to CHAR(), but stores binary byte strings. The size parameter specifies the column length in bytes. Default is 1
+VARBINARY(size)	Equal to VARCHAR(), but stores binary byte strings. The size parameter specifies the maximum column length in bytes.
+TINYBLOB	For BLOBs (Binary Large OBjects). Max length: 255 bytes
+TINYTEXT	Holds a string with a maximum length of 255 characters
+TEXT(size)	Holds a string with a maximum length of 65,535 bytes
+BLOB(size)	For BLOBs (Binary Large OBjects). Holds up to 65,535 bytes of data
+MEDIUMTEXT	Holds a string with a maximum length of 16,777,215 characters
+MEDIUMBLOB	For BLOBs (Binary Large OBjects). Holds up to 16,777,215 bytes of data
+LONGTEXT	Holds a string with a maximum length of 4,294,967,295 characters
+LONGBLOB	For BLOBs (Binary Large OBjects). Holds up to 4,294,967,295 bytes of data
+ENUM(val1, val2, val3, ...)	A string object that can have only one value, chosen from a list of possible values. You can list up to 65535 values in an ENUM list. If a value is inserted that is not in the list, a blank value will be inserted. The values are sorted in the order you enter them
+SET(val1, val2, val3, ...)	A string object that can have 0 or more values, chosen from a list of possible values. You can list up to 64 values in a
+
+
+
+Numeric Data Types
+---------------------------
+Data type	Description
+BIT(size)	A bit-value type. The number of bits per value is specified in size. The size parameter can hold a value from 1 to 64. The default value for size is 1.
+TINYINT(size)	A very small integer. Signed range is from -128 to 127. Unsigned range is from 0 to 255. The size parameter specifies the maximum display width (which is 255)
+BOOL	Zero is considered as false, nonzero values are considered as true.
+BOOLEAN	Equal to BOOL
+SMALLINT(size)	A small integer. Signed range is from -32768 to 32767. Unsigned range is from 0 to 65535. The size parameter specifies the maximum display width (which is 255)
+MEDIUMINT(size)	A medium integer. Signed range is from -8388608 to 8388607. Unsigned range is from 0 to 16777215. The size parameter specifies the maximum display width (which is 255)
+INT(size)	A medium integer. Signed range is from -2147483648 to 2147483647. Unsigned range is from 0 to 4294967295. The size parameter specifies the maximum display width (which is 255)
+INTEGER(size)	Equal to INT(size)
+BIGINT(size)	A large integer. Signed range is from -9223372036854775808 to 9223372036854775807. Unsigned range is from 0 to 18446744073709551615. The size parameter specifies the maximum display width (which is 255)
+FLOAT(size, d)	A floating point number. The total number of digits is specified in size. The number of digits after the decimal point is specified in the d parameter. This syntax is deprecated in MySQL 8.0.17, and it will be removed in future MySQL versions
+FLOAT(p)	A floating point number. MySQL uses the p value to determine whether to use FLOAT or DOUBLE for the resulting data type. If p is from 0 to 24, the data type becomes FLOAT(). If p is from 25 to 53, the data type becomes DOUBLE()
+DOUBLE(size, d)	A normal-size floating point number. The total number of digits is specified in size. The number of digits after the decimal point is specified in the d parameter
+DOUBLE PRECISION(size, d)	 
+DECIMAL(size, d)	An exact fixed-point number. The total number of digits is specified in size. The number of digits after the decimal point is specified in the d parameter. The maximum number for size is 65. The maximum number for d is 30. The default value for size is 10. The default value for d is 0.
+DEC(size, d)	Equal to DECIMAL(size,d)
+
+
+
+Date and Time Data Types
+-----------------------------------
+Data type	Description
+DATE	A date. Format: YYYY-MM-DD. The supported range is from '1000-01-01' to '9999-12-31'
+DATETIME(fsp)	A date and time combination. Format: YYYY-MM-DD hh:mm:ss. The supported range is from '1000-01-01 00:00:00' to '9999-12-31 23:59:59'. Adding DEFAULT and ON UPDATE in the column definition to get automatic initialization and updating to the current date and time
+TIMESTAMP(fsp)	A timestamp. TIMESTAMP values are stored as the number of seconds since the Unix epoch ('1970-01-01 00:00:00' UTC). Format: YYYY-MM-DD hh:mm:ss. The supported range is from '1970-01-01 00:00:01' UTC to '2038-01-09 03:14:07' UTC. Automatic initialization and updating to the current date and time can be specified using DEFAULT CURRENT_TIMESTAMP and ON UPDATE CURRENT_TIMESTAMP in the column definition
+TIME(fsp)	A time. Format: hh:mm:ss. The supported range is from '-838:59:59' to '838:59:59'
+YEAR	A year in four-digit format. Values allowed in four-digit format: 1901 to 2155, and 0000.
+MySQL 8.0 does not support year in two-digit format.
+
+
+MySQL operators
+----------------------
+=,<,<=,>,>=,IN,AND,OR,BETWEEN,  LIKE, NOT LIKE, NULL,NOT NULL 
+
+DISTINCT, UNION,UNION ALL,INTERSECT, EXCEPT
+
+MySQL Functions
+-----------------------
+String
+
+length(),concat(),upper(),lower(),ifnull(),coalesce() 
+
+Numeric
+-------------
+round(),ceil(),floor()
+
+
+Date
+-------
+datediff(),extract(),sysdate(),date_format()
+
+Aggregate/Single Row Functions
+-----------------------------------------------
+max(),min(),sum(),count(),avg()
+
+
+Window Functions
+---------------------------
+row_number(),rank(),dense_rank()
+
+
+Joins
+---------
+Inner - self
+Outer - left,right
+
+
+drop table student;
+drop table course;
+
+create table course(id int primary key,name text, price float);
+
+insert into course values
+(10,'Java',1000),
+(20,'Angular',2000),
+(30,'React',3000),
+(40,'Web Programming',4000);
+
+
+
+create table student(id int primary key,name text, cid int);
+
+insert into student values
+(1,'Amol',10),
+(2,'Ajay',10),
+(3,'Sumit',20),
+(4,'Rajesh',60),
+(5,'Prakash',70);
+
+
+select * from student;
+select * from course;
+
+
+Inner Join
+--------------
+select c.id,c.name,c.price,s.id,s.name from course c join student s on s.cid=c.id;
+
+select c.id,c.name,c.price,s.id,s.name from course c inner join student s on s.cid=c.id;
+
+
+select c.id,c.name,c.price,s.id,s.name from course c join student s where s.cid=c.id;
+
+select c.id,c.name,c.price,s.id,s.name from course c inner join student s where s.cid=c.id;
+
+
+Left join /Left outer join
+------------------------------
+
+select c.id,c.name,c.price,s.id,s.name from course c left join student s on s.cid=c.id;
+
+select c.id,c.name,c.price,s.id,s.name from course c left outer join student s on s.cid=c.id;
+
+
+
+Right join /Right outer join
+----------------------------------
+
+select c.id,c.name,c.price,s.id,s.name from course c right join student s on s.cid=c.id;
+
+select c.id,c.name,c.price,s.id,s.name from course c right outer join student s on s.cid=c.id;
+
+
+Self Join
+-------------
+
+create table emp(
+id int primary key,
+fname varchar(20),
+lname varchar(20),
+salary int,
+mgr_id int,
+dpet_id int default (10)
+);
+
+insert into emp values
+(1,'sachin','patil',12000,null,10),
+(2,'sachin','sharma',12000,4,10),
+(3,'mohan','sharma',12000,2,10),
+(4,'rajesh','sharma',12000,1,10),
+(5,'sumit','sharma',12000,1,10);
+
+select * from emp;
+
+
+select e.id,concat(e.fname,' ',e.lname) as emp_name,e.mgr_id,concat(m.fname,' ',m.lname) as mgr_name from emp e join emp m on e.mgr_id=m.id;
+ 
+select e.id,concat(e.fname,' ',e.lname) as emp_name,e.mgr_id,concat(m.fname,' ',m.lname) as mgr_name from emp e inner join emp m on e.mgr_id=m.id;
+
+
+
+
+
+
+MYSQL BACKUP/RESTORE
+--------------------------------------------
+https://phoenixnap.com/kb/how-to-backup-restore-a-mysql-database
+
+BACKUP
+--------
+C:\Program Files\MySQL\MySQL Server 8.0\bin>mysqldump.exe -u root -p company > company_db.sql
+
+mysqldump -u root -p sms_db > sms_db.sql
+
+
+RESTORE
+-------------
+
+CREATE DATABASE COMPANY;
+
+C:\Program Files\MySQL\MySQL Server 8.0\bin> mysql -u root -p company < company_db.sql
+
+CREATE DATABASE sms_db_backup;
+
+mysql -u root -p sms_db_backup < sms_db.sql
+
+
+
+mysqldump.exe -u root -p bank > bank_db.sql
+
+mysql -u root -p bank < bank_db.sql
+mysql -u root -p bank_db < bank_db.sql
+mysql -u root -p a_ums < d:\VISHAL_SIR\ums.sql
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+   
