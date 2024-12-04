@@ -1307,6 +1307,108 @@ mysql -u root -p a_ums < d:\VISHAL_SIR\ums.sql
 
 
 
+row_number()
+Rank()
+Dens rank()
+Percent rank()
+Cume dist()
+Ntile()
+Lag()
+Lead()
+Firstvalue()
+Lastvalue()
+Nthvalue()
+
+
+
+
+
+
+
+
+select * from employees;
+
+select department_id, max(salary) from employees group by  department_id;
+
+
+select e.*, max(salary) over() as max_salary from employees e;
+
+select e.*, max(salary) over(partition by department_id) as max_salary from employees e;
+
+
+select e.*,row_number() over() as rn from employees e;
+
+select e.*,row_number() over(partition by department_id) as rn from employees e;
+
+
+select e.*,row_number() over(partition by department_id order by employee_id) as rn from employees e;
+
+select e.*,row_number() over(partition by department_id order by employee_id desc) as rn from employees e;
+
+
+
+select * from(
+select e.*,row_number() over(partition by department_id order by employee_id) as rn from employees e
+) x where x.rn<5;
+
+
+select * from(
+select e.*,rank() over(partition by department_id order by salary desc) as rnk from employees e
+) x where x.rnk<5;
+
+
+
+select * from(
+select e.*,dense_rank() over(partition by department_id order by salary desc) as dense_rnk from employees e
+) x where x.dense_rnk<4;
+
+
+select * from(
+select e.*,rank() over(partition by department_id order by salary desc) as rnk from employees e
+) x where x.rnk<4;
+
+
+
+
+select * from(
+select e.employee_id,e.first_name,e.salary,e.department_id,rank() over(partition by department_id order by salary desc) as rnk,
+dense_rank() over(partition by department_id order by salary desc) as dense_rnk,
+row_number() over(partition by department_id order by employee_id) as rn from employees e) x where x.rn<4;
+
+
+select * from(
+select e.employee_id,e.first_name,e.salary,e.department_id,rank() over(partition by department_id order by salary desc) as rnk,
+dense_rank() over(partition by department_id order by salary desc) as dense_rnk,
+row_number() over(partition by department_id order by salary desc) as rn from employees e) x where x.rn<4;
+
+
+
+
+Tea Break : 11:50 am IST.
+
+
+
+
+
+
+
+-- fetch a query to display if the salary of an employee is higher,lower or equal to the previous employee
+
+select e.first_name,e.salary,lag(salary) over(partition by department_id order by employee_id) as prev_emp_salary from employees e;
+
+select e.first_name,e.salary,lag(salary,5,0) over(partition by department_id order by employee_id) as prev_emp_salary from employees e;
+
+
+
+-- fetch a query to display if the salary of an employee is higher,lower or equal to the next employee
+
+select e.first_name,e.salary,lead(salary) over(partition by department_id order by employee_id) as next_emp_salary from employees e;
+
+
+
+select e.employee_id,e.first_name,lag(salary,1,0) over(partition by department_id order by employee_id) as prev_emp_salary,lead(salary,1,0) over(partition by department_id order by employee_id) as next_emp_salary from employees e;
+
+
 
 
 
