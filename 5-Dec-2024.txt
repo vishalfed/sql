@@ -2232,6 +2232,35 @@ select e.dept_id,e.id,e.fname,e.lname,e.salary from employee1 e group by e.dept_
 select e.dept_id,e.id,e.fname,e.lname,e.salary from employee1 e group by e.dept_id having 
 e.salary in (select max(e.salary) from employee1 e group by e.dept_id);
 
+select e.dept_id,e.id,e.fname,e.lname,e.salary from employee1 e
+where e.salary = (
+SELECT 
+            MAX(e2.salary)
+        FROM 
+            employees e2 
+        WHERE 
+            e2.dept_id = e.dept_id
+);
+
+
+-----------------------
+SELECT 
+    e.emp_name, -- Selects the employee name
+    e.dep_id -- Selects the department ID
+FROM 
+    employees e -- Specifies the 'employees' table with alias 'e' to retrieve data from
+WHERE 
+    e.salary = ( -- Filters the employees based on the condition that their salary equals the maximum salary for their department
+        SELECT 
+            MAX(salary) -- Finds the maximum salary for each department using a subquery
+        FROM 
+            employees e2 -- Specifies a correlated subquery by referencing the 'employees' table again with alias 'e2'
+        WHERE 
+            e2.dep_id = e.dep_id -- Correlates the subquery with the main query by comparing the department IDs
+    );
+
+------------------------
+
 
 
 
